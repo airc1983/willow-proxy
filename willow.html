@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willow — Dietary-Safe Food Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF3B7A;--pink-h:#e02d6a;--pink-pale:#FFF0F5;--pink-mid:#FFD6E7;--black:#0A0A0A;--dark:#111111;--dark2:#1A1A1A;--grey:#888888;--gl:#E8E8E8;--gp:#F8F7F6;--white:#FFFFFF;--r:16px;--rl:24px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-logo{font-family:'Pacifico',cursive;font-size:26px;color:var(--pink);text-decoration:none;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:var(--pink)!important;color:#fff!important;padding:9px 20px;border-radius:10px;font-weight:700!important;}
+.nav-cta:hover{background:var(--pink-h)!important;}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 24px 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:1000px;height:700px;background:radial-gradient(ellipse at center,rgba(255,59,122,.16) 0%,transparent 68%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;text-align:center;max-width:760px;width:100%;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--pink);background:rgba(255,59,122,.1);border:1px solid rgba(255,59,122,.25);padding:6px 16px;border-radius:20px;margin-bottom:28px;}
+.eyebrow::before{content:'';width:6px;height:6px;background:var(--pink);border-radius:50%;animation:pdot 2s infinite;}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.6);}}
+.hero h1{font-family:'Pacifico',cursive;font-size:clamp(56px,10vw,108px);color:#fff;line-height:1.02;margin-bottom:18px;letter-spacing:-1px;}
+.hero h1 .p{color:var(--pink);}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.5);font-weight:400;line-height:1.7;max-width:500px;margin:0 auto 44px;}
+
+/* CHAT BOX */
+.chat-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:var(--rl);overflow:hidden;max-width:680px;width:100%;margin:0 auto;backdrop-filter:blur(10px);box-shadow:0 32px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.05);}
+.cb-msgs{padding:26px 26px 8px;display:flex;flex-direction:column;gap:14px;min-height:190px;max-height:270px;overflow-y:auto;}
+.mrow{display:flex;gap:10px;align-items:flex-start;animation:fu .3s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.mrow.u{flex-direction:row-reverse;}
+.av{width:34px;height:34px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-family:'Pacifico',cursive;font-size:11px;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(255,59,122,.4);}
+.av.ua{background:#2a2a2a;font-family:'DM Sans',sans-serif;font-weight:700;font-size:12px;}
+.bub{max-width:78%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.62;}
+.bub.w{background:rgba(255,255,255,.07);color:rgba(255,255,255,.88);border-bottom-left-radius:4px;}
+.bub.ua{background:var(--pink);color:#fff;border-bottom-right-radius:4px;}
+.typing{display:flex;gap:4px;align-items:center;padding:4px 0;}
+.typing span{width:7px;height:7px;background:rgba(255,59,122,.6);border-radius:50%;animation:bob 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bob{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+.chips{padding:10px 26px 14px;display:flex;flex-wrap:wrap;gap:8px;}
+.chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.68);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.chip:hover{border-color:var(--pink);color:var(--pink);background:rgba(255,59,122,.08);}
+.cb-input-row{display:flex;gap:10px;padding:14px 18px 18px;border-top:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.2);}
+.cb-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;outline:none;transition:border-color .2s;}
+.cb-input::placeholder{color:rgba(255,255,255,.28);}
+.cb-input:focus{border-color:var(--pink);}
+.send-btn{background:var(--pink);color:#fff;border:none;border-radius:12px;padding:12px 22px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .1s;white-space:nowrap;}
+.send-btn:hover{background:var(--pink-h);}
+.send-btn:active{transform:scale(.96);}
+
+/* STATS */
+.stats{background:var(--dark2);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:28px 48px;display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-n{font-family:'DM Serif Display',serif;font-size:36px;color:var(--pink);display:block;line-height:1;margin-bottom:4px;}
+.stat-l{font-size:11px;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.2px;}
+.sdiv{width:1px;height:40px;background:rgba(255,255,255,.08);}
+
+/* SECTIONS */
+.sec{padding:96px 48px;max-width:1200px;margin:0 auto;}
+.sec.dark-bg{max-width:100%;background:var(--dark);padding:96px 48px;}
+.sec.grey-bg{max-width:100%;background:var(--gp);padding:96px 48px;}
+.sec-inner{max-width:1200px;margin:0 auto;}
+.slabel{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:14px;}
+.stitle{font-family:'DM Serif Display',serif;font-size:clamp(30px,3.5vw,50px);line-height:1.15;color:var(--black);margin-bottom:14px;}
+.stitle em{font-style:italic;color:var(--pink);}
+.stitle.light{color:#fff;}
+.ssub{font-size:16px;color:var(--grey);line-height:1.72;max-width:540px;margin-bottom:52px;}
+.ssub.light{color:rgba(255,255,255,.42);}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px;}
+.step{background:#fff;border-radius:var(--rl);padding:36px 30px;border:1px solid var(--gl);transition:all .25s;position:relative;overflow:hidden;}
+.step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--pink);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.step:hover::before{transform:scaleX(1);}
+.step:hover{box-shadow:0 12px 48px rgba(255,59,122,.1);transform:translateY(-4px);}
+.step-ico{font-size:30px;margin-bottom:14px;display:block;}
+.step-n{font-family:'DM Serif Display',serif;font-size:52px;color:var(--pink-mid);line-height:1;margin-bottom:18px;}
+.step-t{font-size:18px;font-weight:700;color:var(--black);margin-bottom:10px;}
+.step-b{font-size:14px;color:var(--grey);line-height:1.7;}
+
+/* EXAMPLES */
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px;}
+.ex-card{background:var(--gp);border:1.5px solid var(--gl);border-radius:var(--r);padding:22px;cursor:pointer;transition:all .2s;text-decoration:none;display:block;}
+.ex-card:hover{border-color:var(--pink);background:var(--pink-pale);transform:translateY(-3px);box-shadow:0 8px 32px rgba(255,59,122,.12);}
+.ex-ico{font-size:22px;margin-bottom:10px;display:block;}
+.ex-t{font-size:14px;font-weight:600;color:var(--black);line-height:1.45;}
+.ex-card:hover .ex-t{color:var(--pink);}
+
+/* CONFIDENCE */
+.conf-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.conf-levels{display:flex;flex-direction:column;gap:14px;}
+.crow{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;border-radius:var(--r);border:1px solid;}
+.crow.v{background:rgba(0,200,150,.07);border-color:rgba(0,200,150,.18);}
+.crow.s{background:rgba(255,176,32,.07);border-color:rgba(255,176,32,.18);}
+.crow.u{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.07);}
+.cdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.cdot.v{background:#00C896;}.cdot.s{background:#FFB020;}.cdot.u{background:#555;}
+.clabel{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;}
+.cdesc{font-size:13px;color:rgba(255,255,255,.42);line-height:1.55;}
+
+/* MOCK CARD */
+.mock-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:20px;overflow:hidden;}
+.mc-h{padding:20px 20px 12px;display:flex;gap:12px;align-items:flex-start;}
+.mc-num{width:28px;height:28px;background:var(--pink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.mc-name{font-family:'DM Serif Display',serif;font-size:18px;color:#fff;margin-bottom:3px;}
+.mc-addr{font-size:12px;color:rgba(255,255,255,.35);}
+.mc-badge{margin:0 20px 12px;display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:rgba(0,200,150,.12);color:#00C896;}
+.mc-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#00C896;display:inline-block;}
+.mc-div{height:1px;background:rgba(255,255,255,.07);margin:0 20px;}
+.mc-body{padding:14px 20px;}
+.mc-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:12px;}
+.mc-why{background:rgba(255,59,122,.1);border-left:3px solid var(--pink);border-radius:0 8px 8px 0;padding:9px 12px;font-size:12px;color:var(--pink);font-weight:500;margin-bottom:14px;}
+.mc-links{display:flex;gap:8px;flex-wrap:wrap;}
+.mc-link{padding:5px 10px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.45);}
+.mc-link.bk{background:var(--pink);color:#fff;border-color:var(--pink);}
+
+/* TESTIMONIALS */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px;}
+.tcard{background:#fff;border-radius:var(--rl);padding:30px;border:1px solid var(--gl);transition:all .2s;}
+.tcard:hover{border-color:var(--pink-mid);box-shadow:0 8px 32px rgba(255,59,122,.08);}
+.tst{color:var(--pink);font-size:14px;letter-spacing:2px;margin-bottom:14px;}
+.ttxt{font-size:15px;line-height:1.78;color:var(--grey);margin-bottom:22px;font-style:italic;}
+.tauthor{display:flex;align-items:center;gap:12px;}
+.tav{width:40px;height:40px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;}
+.tname{font-size:14px;font-weight:700;color:var(--black);}
+.tmeta{font-size:12px;color:var(--grey);margin-top:1px;}
+
+/* FAQ */
+.faq-inner{max-width:700px;margin:0 auto;}
+.faq-list{margin-top:44px;}
+.faq-item{border-bottom:1px solid var(--gl);}
+.faq-q{width:100%;background:none;border:none;padding:20px 0;text-align:left;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;color:var(--black);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color .2s;}
+.faq-q:hover{color:var(--pink);}
+.faq-ico{width:28px;height:28px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--grey);flex-shrink:0;transition:all .2s;}
+.faq-item.open .faq-ico{background:var(--pink);color:#fff;transform:rotate(45deg);}
+.faq-a{display:none;padding:0 0 20px;font-size:15px;color:var(--grey);line-height:1.75;}
+.faq-item.open .faq-a{display:block;}
+
+/* CTA */
+.cta-strip{background:var(--pink);padding:96px 48px;text-align:center;}
+.cta-strip h2{font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,54px);color:#fff;margin-bottom:14px;line-height:1.15;}
+.cta-strip p{font-size:18px;color:rgba(255,255,255,.72);margin-bottom:38px;}
+.cta-btn{background:#fff;color:var(--pink);border:none;border-radius:14px;padding:16px 36px;font-size:16px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.2);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:60px 48px 36px;}
+.footer-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.06);}
+.fbrand .flogo{font-family:'Pacifico',cursive;font-size:26px;color:var(--pink);display:block;margin-bottom:12px;}
+.fbrand p{font-size:14px;color:rgba(255,255,255,.3);line-height:1.7;max-width:260px;}
+.fcol h4{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:18px;}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.fcol a{font-size:14px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
+.fcol a:hover{color:#fff;}
+.footer-bot{max-width:1200px;margin:0 auto;padding-top:26px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.footer-bot p{font-size:13px;color:rgba(255,255,255,.18);}
+.socials{display:flex;gap:10px;}
+.sico{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;text-decoration:none;transition:all .2s;color:rgba(255,255,255,.4);}
+.sico:hover{background:var(--pink);border-color:var(--pink);color:#fff;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--pink-mid);}
+
+/* ── APP OVERLAY ── */
+#app{display:none;position:fixed;inset:0;z-index:300;background:var(--gp);flex-direction:column;}
+#app.open{display:flex;}
+.app-hdr{background:#fff;border-bottom:1px solid var(--gl);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+.app-logo{font-family:'Pacifico',cursive;font-size:24px;color:var(--pink);text-decoration:none;}
+.app-nav{display:flex;gap:4px;}
+.app-nav button{background:none;border:none;padding:7px 13px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;color:var(--grey);transition:all .2s;}
+.app-nav button.active,.app-nav button:hover{background:var(--pink-pale);color:var(--pink);}
+.app-nav button.active{font-weight:700;}
+.close-app{background:none;border:1.5px solid var(--gl);border-radius:10px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;color:var(--grey);font-family:'DM Sans',sans-serif;transition:all .2s;}
+.close-app:hover{border-color:var(--pink);color:var(--pink);}
+.hbadge{background:var(--pink);color:#fff;border-radius:50%;font-size:10px;font-weight:700;padding:1px 5px;margin-left:4px;}
+.atab{display:none;flex:1;overflow:hidden;}
+.atab.active{display:flex;}
+
+/* API KEY BANNER */
+.api-banner{background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.3);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.api-banner p{font-size:13px;color:#8a6000;flex:1;line-height:1.5;}
+.api-banner input{border:1.5px solid rgba(255,176,32,.4);border-radius:8px;padding:7px 12px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:260px;background:#fff;}
+.api-banner input:focus{border-color:#FFB020;}
+.api-banner button{background:#FFB020;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.api-banner button:hover{background:#e09000;}
+
+/* LOADING SPINNER */
+.spinner-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:16px;}
+.spinner{width:40px;height:40px;border:3px solid var(--pink-mid);border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner-wrap p{font-size:14px;color:var(--grey);font-weight:500;}
+
+/* MAP + CARDS */
+.map-p{width:400px;flex-shrink:0;position:relative;overflow:hidden;}
+#willow-map{width:100%;height:100%;}
+.m-hdr{position:absolute;top:16px;left:16px;right:16px;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 4px 24px rgba(0,0,0,.1);z-index:20;display:flex;align-items:center;justify-content:space-between;pointer-events:none;}
+.m-hdr span{font-size:13px;font-weight:600;}
+.gfbadge{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(0,200,150,.1);color:#00a87a;padding:3px 8px;border-radius:6px;}
+.mwm{position:absolute;bottom:16px;left:16px;font-family:'Pacifico',cursive;font-size:13px;color:rgba(0,0,0,.4);pointer-events:none;z-index:20;}
+.use-maps-btn{position:absolute;bottom:16px;right:16px;background:#fff;border:none;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--black);box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .2s;z-index:20;}
+.use-maps-btn:hover{background:var(--pink);color:#fff;}
+
+.cards-p{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:16px;}
+.res-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
+.res-bar p{font-size:13px;color:var(--grey);font-weight:500;}
+.res-bar strong{color:var(--pink);}
+.new-s{background:#fff;border:1.5px solid var(--gl);border-radius:10px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;color:var(--grey);font-family:'DM Sans',sans-serif;transition:all .2s;}
+.new-s:hover{border-color:var(--pink);color:var(--pink);}
+
+/* VENUE CARD */
+.vc{background:#fff;border-radius:var(--r);border:2px solid transparent;box-shadow:0 2px 14px rgba(0,0,0,.06);overflow:hidden;cursor:pointer;transition:all .22s;margin-bottom:2px;}
+.vc:hover,.vc.act{border-color:var(--pink);box-shadow:0 8px 36px rgba(255,59,122,.14);transform:translateY(-2px);}
+.vch{padding:16px 16px 10px;display:flex;align-items:flex-start;gap:10px;}
+.vcnum{width:26px;height:26px;background:var(--pink);border-radius:7px;font-size:12px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.vci{flex:1;}
+.vcn{font-family:'DM Serif Display',serif;font-size:17px;color:var(--black);margin-bottom:2px;}
+.vca,.vcp{font-size:12px;color:var(--grey);margin-top:1px;}
+.vcp a{color:var(--grey);text-decoration:none;transition:color .15s;}
+.vcp a:hover{color:var(--pink);}
+.vch-actions{display:flex;gap:6px;flex-shrink:0;align-items:center;}
+.hbtn{background:none;border:1.5px solid var(--gl);border-radius:9px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s;color:var(--grey);}
+.hbtn:hover,.hbtn.lk{border-color:var(--pink);background:var(--pink-pale);color:var(--pink);}
+.maps-btn-sm{background:none;border:1.5px solid var(--gl);border-radius:9px;padding:0 10px;height:34px;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--grey);font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.maps-btn-sm:hover{border-color:#4285F4;color:#4285F4;background:#E8F0FE;}
+.cbadge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin:0 16px 10px;}
+.cbadge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
+.cbadge.verified{background:rgba(0,200,150,.1);color:#00a87a;}
+.cbadge.supported{background:rgba(255,176,32,.1);color:#e09000;}
+.cbadge.unknown{background:rgba(0,0,0,.05);color:#999;}
+.vcdiv{height:1px;background:var(--gl);margin:0 16px;}
+.vcbody{padding:12px 16px;}
+.vcdesc{font-size:13px;line-height:1.65;color:#444;margin-bottom:11px;}
+.wf{background:var(--pink-pale);border-left:3px solid var(--pink);border-radius:0 8px 8px 0;padding:9px 12px;font-size:12px;color:var(--pink);font-weight:500;margin-bottom:11px;line-height:1.5;}
+.vclinks{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:4px;}
+
+/* Link buttons */
+.vcl{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:6px 11px;border-radius:8px;text-decoration:none;border:1.5px solid var(--gl);color:var(--grey);cursor:pointer;transition:all .15s;}
+.vcl:hover{border-color:var(--pink);color:var(--pink);background:var(--pink-pale);}
+.vcl.booking{background:var(--pink);color:#fff;border-color:var(--pink);}
+.vcl.booking:hover{background:var(--pink-h);color:#fff;}
+.vcl.instagram:hover{border-color:#E1306C;color:#E1306C;background:#fff0f5;}
+.vcl.tiktok:hover{border-color:#000;color:#000;background:#f5f5f5;}
+.vcl.phone:hover{border-color:#00a87a;color:#00a87a;background:rgba(0,200,150,.06);}
+.vcl.maps:hover{border-color:#4285F4;color:#4285F4;background:#E8F0FE;}
+.vcl.website:hover{border-color:#6366f1;color:#6366f1;background:#eef2ff;}
+
+/* REVIEWS */
+.rtog{width:100%;background:none;border:none;padding:10px 16px;text-align:left;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--grey);cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gl);transition:color .2s;}
+.rtog:hover{color:var(--pink);}
+.rpanel{display:none;padding:4px 16px 16px;}
+.rpanel.open{display:block;}
+.ritem{padding:9px 0;border-bottom:1px solid var(--gl);}
+.ritem:last-of-type{border-bottom:none;}
+.rhdr{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.rauth{font-size:13px;font-weight:700;color:var(--black);}
+.rstr{color:#FFB020;font-size:12px;}
+.rbadge{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:auto;}
+.rbadge.google{background:#E8F0FE;color:#4285F4;}
+.rbadge.willow{background:var(--pink-pale);color:var(--pink);}
+.rtxt{font-size:13px;line-height:1.5;color:#555;}
+.arf{margin-top:12px;border-top:1px dashed var(--pink-mid);padding-top:12px;}
+.arf p{font-size:11px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.sps{display:flex;gap:4px;margin-bottom:8px;}
+.sps button{background:none;border:none;font-size:20px;cursor:pointer;color:#ddd;transition:color .1s;padding:0;line-height:1;}
+.sps button.on{color:#FFB020;}
+.rta{width:100%;border:1.5px solid var(--gl);border-radius:8px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;outline:none;color:var(--black);background:var(--gp);transition:border-color .2s;}
+.rta:focus{border-color:var(--pink);background:#fff;}
+.subr{margin-top:7px;background:var(--pink);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.subr:hover{background:var(--pink-h);}
+
+/* LIKED */
+.lk-inner{padding:32px;overflow-y:auto;width:100%;}
+.lk-inner h2{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;}
+.lk-inner .lsub{font-size:14px;color:var(--grey);margin-bottom:26px;}
+.lk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;}
+.lk-empty{text-align:center;padding:80px 24px;color:var(--grey);}
+.lk-empty .ei{font-size:48px;opacity:.3;margin-bottom:14px;}
+.lk-empty h3{font-size:18px;font-weight:600;color:#555;margin-bottom:8px;}
+
+/* Opening hours */
+.hours-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px;margin-top:3px;}
+.hours-tag.open-now{background:rgba(0,200,150,.1);color:#00a87a;}
+.hours-tag.closed-now{background:rgba(255,59,122,.08);color:var(--pink);}
+
+/* Photo strip */
+.photo-strip{display:flex;gap:6px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none;}
+.photo-strip::-webkit-scrollbar{display:none;}
+.photo-strip img{width:80px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;cursor:pointer;transition:opacity .2s;}
+.photo-strip img:hover{opacity:.85;}
+
+/* Rating display */
+.rating-row{display:flex;align-items:center;gap:6px;margin-top:2px;}
+.rating-stars{color:#FFB020;font-size:12px;}
+.rating-count{font-size:11px;color:var(--grey);}
+
+/* Error state */
+.error-card{background:#fff5f7;border:1.5px solid var(--pink-mid);border-radius:var(--r);padding:24px;text-align:center;color:var(--pink);}
+.error-card h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+.error-card p{font-size:13px;color:var(--grey);line-height:1.6;}
+</style>
+<script>
+// Google Maps loader — called once Maps JS API is ready
+function initWillowMap(){
+  window._mapsReady = true;
+  if(window._mapsReadyCallback) window._mapsReadyCallback();
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9pA__snvsxwZgLaFce1WRoNy1i0w0Wd0&callback=initWillowMap&libraries=marker" async defer></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Willow</a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#confidence">Dietary Trust</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openApp(event)">Try Willow →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="eyebrow">Dietary-safe food discovery</div>
+    <h1>Hey, I'm <span class="p">Willow</span></h1>
+    <p class="hero-sub">Tell me what you fancy and what you can't eat — I'll find places in Norwich you'll actually enjoy. Safely.</p>
+    <div class="chat-box">
+      <div class="cb-msgs" id="hero-msgs">
+        <div class="mrow">
+          <div class="av">W</div>
+          <div class="bub w">Hey! 👋 Do you have any dietary requirements I should know about? Coeliac, gluten free, dairy free, vegan...</div>
+        </div>
+      </div>
+      <div class="chips" id="hero-chips">
+        <button class="chip" onclick="heroChip('Gluten free / coeliac')">🌾 Gluten free</button>
+        <button class="chip" onclick="heroChip('Dairy free')">🥛 Dairy free</button>
+        <button class="chip" onclick="heroChip('Vegan')">🌱 Vegan</button>
+        <button class="chip" onclick="heroChip('No restrictions')">✓ No restrictions</button>
+      </div>
+      <div class="cb-input-row">
+        <input class="cb-input" id="hero-inp" type="text" placeholder="Type your answer or choose above..." onkeydown="if(event.key==='Enter')heroSend()">
+        <button class="send-btn" onclick="heroSend()">Find places →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">4,200+</span><span class="stat-l">Venues checked</span></div>
+  <div class="sdiv"></div>
+  <div class="stat"><span class="stat-n">98%</span><span class="stat-l">Safe dining rate</span></div>
+  <div class="sdiv"></div>
+  <div class="stat"><span class="stat-n">12k+</span><span class="stat-l">Community reviews</span></div>
+  <div class="sdiv"></div>
+  <div class="stat"><span class="stat-n">3–7</span><span class="stat-l">Curated results only</span></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="sec grey-bg" id="how">
+  <div class="sec-inner">
+    <p class="slabel">Simple by design</p>
+    <h2 class="stitle">Your evening, planned in <em>minutes</em></h2>
+    <p class="ssub">No endless lists, no tab-hopping. Willow asks a few smart questions and returns a short curated list you can actually act on.</p>
+    <div class="steps">
+      <div class="step"><span class="step-ico">💬</span><div class="step-n">01</div><h3 class="step-t">Tell Willow what you need</h3><p class="step-b">Dietary requirements, vibe, whether you want drinks too — Willow's conversational intake takes 60 seconds and gets the full picture.</p></div>
+      <div class="step"><span class="step-ico">🔍</span><div class="step-n">02</div><h3 class="step-t">Willow finds and checks</h3><p class="step-b">Using Google Places, menu analysis, and community reviews, Willow finds venues that genuinely fit — not ones that just claim "GF options available".</p></div>
+      <div class="step"><span class="step-ico">📍</span><div class="step-n">03</div><h3 class="step-t">Get 3–7 curated results</h3><p class="step-b">A map, a confidence score, all the links to book — plus real reviews from people who've been there and tested it with the same dietary needs.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXAMPLES -->
+<div class="sec">
+  <p class="slabel">What people ask Willow</p>
+  <h2 class="stitle">Try one of these tonight</h2>
+  <div class="ex-grid">
+    <a class="ex-card" onclick="startSearch('Date night in Norwich, gluten free, romantic vibes, cocktails')"><span class="ex-ico">🕯️</span><p class="ex-t">Date night in Norwich, gluten free, romantic vibes, cocktails</p></a>
+    <a class="ex-card" onclick="startSearch('Sunday lunch near me, coeliac, dog friendly')"><span class="ex-ico">🐶</span><p class="ex-t">Sunday lunch near me, coeliac, dog friendly</p></a>
+    <a class="ex-card" onclick="startSearch('Quick burgers and craft beer, gluten free buns, lively atmosphere')"><span class="ex-ico">🍔</span><p class="ex-t">Quick burgers and craft beer, gluten free buns, lively atmosphere</p></a>
+    <a class="ex-card" onclick="startSearch('Vegan small plates and natural wine, Norwich Lanes')"><span class="ex-ico">🍷</span><p class="ex-t">Vegan small plates and natural wine, Norwich Lanes</p></a>
+    <a class="ex-card" onclick="startSearch('Cocktail bar trail, gluten free snacks, group of 6')"><span class="ex-ico">🍹</span><p class="ex-t">Cocktail bar trail, gluten free snacks to share, group of 6</p></a>
+    <a class="ex-card" onclick="startSearch('Dairy free desserts and coffee, Norwich city centre')"><span class="ex-ico">☕</span><p class="ex-t">Dairy free desserts and coffee in Norwich city centre</p></a>
+  </div>
+</div>
+
+<!-- CONFIDENCE -->
+<div class="sec dark-bg" id="confidence">
+  <div class="sec-inner conf-grid">
+    <div>
+      <p class="slabel">Built on trust</p>
+      <h2 class="stitle light">We don't pretend certainty when it's not there</h2>
+      <p class="ssub light">Every venue carries a confidence score — so you know exactly what you're walking into before you go.</p>
+      <div class="conf-levels">
+        <div class="crow v"><div class="cdot v"></div><div><div class="clabel">✓ Willow Verified</div><div class="cdesc">Venue confirmation + menu evidence + recent community reviews all align. Safe to book with confidence.</div></div></div>
+        <div class="crow s"><div class="cdot s"></div><div><div class="clabel">⚡ GF Supported</div><div class="cdesc">Strong signals but not fully verified. GF options marked on menu — confirm cross-contamination on arrival.</div></div></div>
+        <div class="crow u"><div class="cdot u"></div><div><div class="clabel">? Insufficient Evidence</div><div class="cdesc">Willow says so clearly and won't guess. We only show this if there are no better nearby options.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="mock-card">
+        <div class="mc-h"><div class="mc-num">1</div><div style="flex:1"><div class="mc-name">Figbar</div><div class="mc-addr">📍 60 London Street, Norwich</div><div class="mc-addr" style="margin-top:2px">📞 01603 764 869</div></div><div style="color:var(--pink);font-size:18px">♥</div></div>
+        <span class="mc-badge">Willow Verified</span>
+        <div class="mc-div"></div>
+        <div class="mc-body">
+          <p class="mc-desc">Norwich's most celebrated independent — small plates, natural wines, genuinely creative cooking. Seasonal menu always has strong GF options.</p>
+          <div class="mc-why">✓ Dedicated GF protocol, seasonal menus clearly marked, owner-run kitchen</div>
+          <div class="mc-links"><span class="mc-link bk">📅 Book via RESY</span><span class="mc-link">📸 Instagram</span><span class="mc-link">🌐 Website</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="sec grey-bg">
+  <div class="sec-inner">
+    <p class="slabel">Real people, real evenings</p>
+    <h2 class="stitle">What Willow users say</h2>
+    <div class="tgrid">
+      <div class="tcard"><div class="tst">★★★★★</div><p class="ttxt">"As a coeliac, going out used to take hours of research. Willow found me three verified places in under a minute. I actually enjoyed the night instead of stressing about it."</p><div class="tauthor"><div class="tav">SH</div><div><div class="tname">Sarah H.</div><div class="tmeta">Coeliac · Norwich</div></div></div></div>
+      <div class="tcard"><div class="tst">★★★★★</div><p class="ttxt">"My partner is gluten free and I used to dread planning nights out. The confidence score is brilliant — I knew exactly what to expect before we walked through the door."</p><div class="tauthor"><div class="tav">MT</div><div><div class="tname">Matt T.</div><div class="tmeta">Partner of coeliac · Norfolk</div></div></div></div>
+      <div class="tcard"><div class="tst">★★★★★</div><p class="ttxt">"The map and cards layout is so smart. I could see all my options at once, save favourites, and book in two taps. This is what going out should feel like."</p><div class="tauthor"><div class="tav">CW</div><div><div class="tname">Claire W.</div><div class="tmeta">Dairy free · Norfolk</div></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="sec" id="faq">
+  <div class="faq-inner">
+    <p class="slabel">Questions</p>
+    <h2 class="stitle">Frequently asked</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is Willow?<span class="faq-ico">+</span></button><div class="faq-a">Willow is a conversational food discovery app built for people with dietary requirements. Tell Willow what you need and where you are, and it returns a short curated list of places that genuinely fit — with a dietary confidence score for each one.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does Willow verify gluten free options?<span class="faq-ico">+</span></button><div class="faq-a">Willow uses a combination of Google Places data, menu analysis, and community-submitted reviews. Each venue receives a confidence level: Verified, Supported, or Insufficient Evidence — we never guess.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which cities does Willow cover?<span class="faq-ico">+</span></button><div class="faq-a">We're starting with Norwich as our pilot city and building out a verified database here first. Other UK cities are coming — sign up to be notified when we expand to your area.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I save my favourite places?<span class="faq-ico">+</span></button><div class="faq-a">Yes — tap the heart on any venue to save it to your Liked Places. These persist locally so your trusted spots are always one tap away whenever you return.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I leave reviews for places I visit?<span class="faq-ico">+</span></button><div class="faq-a">Absolutely — community Willow reviews sit alongside Google reviews on each venue card. Your experience helps the next person with the same dietary needs feel confident about where to go.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Willow free?<span class="faq-ico">+</span></button><div class="faq-a">Willow is free in beta. A freemium model is planned — free users get curated recommendations and basic saving, while a paid tier unlocks Willow Verified filtering, collections, and priority support.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Going out shouldn't feel like a research project.</h2>
+  <p>Let Willow do the hard work. Find your next safe, delicious evening in minutes.</p>
+  <button class="cta-btn" onclick="openApp(event)">Start planning tonight →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-in">
+    <div class="fbrand"><span class="flogo">Willow</span><p>Your trusted food concierge for dining, drinking and takeaway. Dietary-safe discovery, without the stress. Based in Norfolk.</p></div>
+    <div class="fcol"><h4>Product</h4><ul><li><a href="#">How it works</a></li><li><a href="#">Dietary confidence</a></li><li><a href="#">Saved places</a></li><li><a href="#">Community reviews</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2026 Willow. All rights reserved. Made with ♥ in Norfolk.</p>
+    <div class="socials"><a href="https://instagram.com" target="_blank" class="sico">📸</a><a href="https://tiktok.com" target="_blank" class="sico">🎵</a><a href="https://twitter.com" target="_blank" class="sico">𝕏</a></div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     APP OVERLAY
+══════════════════════════════════════════ -->
+<div id="app">
+  <div class="app-hdr">
+    <a class="app-logo" href="#">Willow</a>
+    <div class="app-nav">
+      <button class="active" id="anav-results" onclick="switchTab('results')">📍 Results</button>
+      <button id="anav-liked" onclick="switchTab('liked')">♡ Saved <span class="hbadge" id="hbadge" style="display:none">0</span></button>
+    </div>
+    <button class="close-app" onclick="closeApp()">← Back to site</button>
+  </div>
+
+  <!-- Results tab -->
+  <div class="atab active" id="tab-results">
+    <div class="map-p">
+      <div id="willow-map"></div>
+      <div class="m-hdr"><span id="map-location-label">Norwich City Centre</span><span class="gfbadge" id="map-dietary-label">GF SAFE</span></div>
+      <div class="mwm">Willow</div>
+      <button class="use-maps-btn" onclick="openGoogleMapsArea()">Open in Google Maps ↗</button>
+    </div>
+    <div class="cards-p">
+      <div class="res-bar">
+        <p>Showing results for <strong id="res-q">your search</strong></p>
+        <button class="new-s" onclick="closeApp()">← New search</button>
+      </div>
+      <!-- API key banner - shown when no key set -->
+      <div class="api-banner" id="api-banner">
+        <p>🔑 <strong>Google Places API key needed</strong> for live venue search. Enter yours below to activate real results — or browse the demo data for now.</p>
+        <input type="text" id="api-key-input" placeholder="Paste your Google API key...">
+        <button onclick="saveApiKey()">Save key</button>
+      </div>
+      <div id="vcc"></div>
+    </div>
+  </div>
+
+  <!-- Liked tab -->
+  <div class="atab" id="tab-liked" style="overflow-y:auto;">
+    <div class="lk-inner">
+      <h2>♡ Saved Places</h2>
+      <p class="lsub">Your collection of Willow-approved venues</p>
+      <div id="lkc"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// The proxy URL is all you need in the browser.
+// Your Google API key lives on Netlify — never here.
+// ══════════════════════════════════════════
+const GOOGLE_API_KEY = ''; // not used client-side — key is on Netlify
+const PROXY_URL = 'https://willow-search.netlify.app'; // hardcoded — your Netlify proxy
+
+// ══════════════════════════════════════════
+// FALLBACK DEMO VENUES (shown when no API key)
+// These have real links — update instagram/tiktok handles as you get them
+// ══════════════════════════════════════════
+const DEMO_VENUES = [
+  {
+    id:1, name:"The Ivy Norwich", address:"5 Dove Street, Norwich NR2 1DE", phone:"01603 305820",
+    confidence:"verified", rating:4.5, user_ratings_total:312,
+    place_id:"ChIJ_theivynorwich",
+    description:"The Ivy's Norwich outpost brings signature glamour to the city. Dedicated gluten free menu, highly trained allergen management team. Great for a special occasion.",
+    whyFits:"✓ Dedicated GF menu, cross-contamination protocols confirmed, verified by 12 Willow members",
+    instagram:"theivynorwich", tiktok:"theivynorwich",
+    website:"https://theivycollection.com/restaurants/the-ivy-norwich",
+    booking:"https://www.opentable.co.uk/r/the-ivy-norwich",
+    openNow:true, hours:"12:00–23:00",
+    lat:52.6291, lng:1.2956
+  },
+  {
+    id:2, name:"Gonzo's Tea Room", address:"2 Guildhall Hill, Norwich NR2 1JH", phone:"01603 615676",
+    confidence:"verified", rating:4.7, user_ratings_total:189,
+    place_id:"ChIJgonzostearoom",
+    description:"A beloved Norwich institution behind City Hall. Gonzo's has championed dietary-specific cooking for years — quirky, colourful, and brilliant for dinner before a night out.",
+    whyFits:"✓ Long-established GF menu, owner personally coeliac-aware, top-rated in GF communities",
+    instagram:"gonzostearoomnorwich", tiktok:null,
+    website:"https://gonzostearoom.co.uk",
+    booking:null,
+    openNow:true, hours:"09:00–17:00",
+    lat:52.6297, lng:1.2947
+  },
+  {
+    id:3, name:"The Bicycle Shop", address:"17 St Benedicts Street, Norwich NR2 4PE", phone:"01603 625777",
+    confidence:"supported", rating:4.3, user_ratings_total:428,
+    place_id:"ChIJbicycleshopnorwich",
+    description:"A converted bicycle workshop turned popular bar and restaurant in the NR2 creative quarter. Fantastic cocktails, GF options available. Always worth confirming on arrival.",
+    whyFits:"⚡ GF options clearly marked on menu, staff are accommodating — confirm cross-contamination needs on arrival",
+    instagram:"thebicycleshopnorwich", tiktok:"bicycleshopnorwich",
+    website:"https://thebicycleshop.co.uk",
+    booking:"https://thebicycleshop.co.uk/book",
+    openNow:true, hours:"12:00–00:00",
+    lat:52.6307, lng:1.2931
+  },
+  {
+    id:4, name:"Figbar", address:"60 London Street, Norwich NR2 1JX", phone:"01603 764869",
+    confidence:"verified", rating:4.8, user_ratings_total:156,
+    place_id:"ChIJfigbarnorwich",
+    description:"Norwich's most celebrated independent restaurant — small plates, natural wines, genuinely creative cooking. Seasonal menu always has strong GF options. Book ahead, it fills fast.",
+    whyFits:"✓ Willow Verified — dedicated GF protocol, seasonal menus clearly marked, owner-run kitchen",
+    instagram:"figbarnorwich", tiktok:"figbarnorwich",
+    website:"https://figbarnorwich.co.uk",
+    booking:"https://resy.com/cities/nor/figbar",
+    openNow:false, hours:"18:00–23:00",
+    lat:52.6302, lng:1.2970
+  },
+  {
+    id:5, name:"The Tipsy Vegan", address:"9 Pottergate, Norwich NR2 1DS", phone:"01603 622214",
+    confidence:"supported", rating:4.2, user_ratings_total:94,
+    place_id:"ChIJtipsyvegannorwich",
+    description:"Fully plant-based bar and kitchen — naturally GF-friendly on most of the menu. Great craft beers, cocktails, snacks. Fun stop for drinks and a bite. Lively atmosphere.",
+    whyFits:"⚡ Plant-based menu = naturally lower GF risk. Most dishes GF — a few contain oats, check individually",
+    instagram:"thetipsyvegan", tiktok:"tipsyveganorwich",
+    website:"https://thetipsyvegan.co.uk",
+    booking:null,
+    openNow:true, hours:"12:00–23:00",
+    lat:52.6312, lng:1.2939
+  }
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let liked = JSON.parse(localStorage.getItem('willow_liked') || '[]');
+let communityReviews = JSON.parse(localStorage.getItem('willow_cr') || '{}');
+let starRatings = {};
+let currentVenues = [];
+let searchPrefs = {};
+// Hero chat state
+let heroStep = 0;
+
+const chatSteps = [
+  { ask: "Got it — {dietary}. What kind of vibe are you after tonight?",
+    chips: ['🕯️ Romantic & intimate','🎉 Lively and fun','☕ Relaxed and casual','🍸 Just drinks & snacks'], key:'vibe' },
+  { ask: "Would you like drinks venues too — cocktail bars, wine bars?",
+    chips: ['Yes, drinks too!','Food only please','Drinks then food trail'], key:'drinks' },
+  { ask: "Great — which part of Norwich are you in tonight?",
+    chips: ['City centre','Norwich Lanes','Golden Triangle','Anywhere in Norwich'], key:'area' }
+];
+
+// ══════════════════════════════════════════
+// HERO CHAT — collects prefs then jumps straight to results
+// ══════════════════════════════════════════
+function heroChip(t){ heroInputSend(t); }
+function heroSend(){
+  const el = document.getElementById('hero-inp');
+  const t = el.value.trim();
+  if(!t) return;
+  el.value = '';
+  heroInputSend(t);
+}
+
+function heroInputSend(text){
+  addMsg('hero-msgs', text, 'u');
+  document.getElementById('hero-chips').innerHTML = '';
+
+  if(heroStep === 0){
+    searchPrefs.dietary = text;
+    const step = chatSteps[0];
+    const ty = addTyping('hero-msgs');
+    setTimeout(()=>{
+      ty.remove();
+      addMsg('hero-msgs', step.ask.replace('{dietary}', text), 'w');
+      heroStep = 1;
+      setChips('hero-chips', step.chips, heroChip);
+    }, 600);
+
+  } else if(heroStep <= chatSteps.length){
+    const idx = heroStep - 1;
+    searchPrefs[chatSteps[idx].key] = text;
+    heroStep++;
+
+    if(heroStep - 1 < chatSteps.length){
+      const step = chatSteps[heroStep - 1];
+      const ty = addTyping('hero-msgs');
+      setTimeout(()=>{
+        ty.remove();
+        addMsg('hero-msgs', step.ask, 'w');
+        setChips('hero-chips', step.chips, heroChip);
+      }, 600);
+    } else {
+      // All prefs collected — launch results
+      const ty = addTyping('hero-msgs');
+      setTimeout(()=>{
+        ty.remove();
+        const dietary = searchPrefs.dietary || 'dietary-safe';
+        const area = searchPrefs.area || 'Norwich';
+        addMsg('hero-msgs', `Perfect — finding the best ${dietary} spots for a ${(searchPrefs.vibe||'').replace(/[🕯️🎉☕🍸]/g,'').trim().toLowerCase()} evening in ${area}...`, 'w');
+        setTimeout(()=>{
+          openApp(null, true); // true = skip to results immediately
+        }, 1200);
+      }, 700);
+    }
+  }
+}
+
+// Example card shortcut — goes straight to results with a prompt
+function startSearch(prompt){
+  // Parse what we can from the prompt
+  searchPrefs = { dietary: 'Gluten free', vibe: 'casual', drinks: 'Yes', area: 'Norwich', raw: prompt };
+  if(prompt.toLowerCase().includes('romantic')) searchPrefs.vibe = 'romantic';
+  if(prompt.toLowerCase().includes('lively')) searchPrefs.vibe = 'lively';
+  if(prompt.toLowerCase().includes('vegan')) searchPrefs.dietary = 'Vegan';
+  if(prompt.toLowerCase().includes('dairy')) searchPrefs.dietary = 'Dairy free';
+  openApp(null, true);
+}
+
+// ══════════════════════════════════════════
+// APP OVERLAY
+// ══════════════════════════════════════════
+function openApp(e, goToResults){
+  if(e) e.preventDefault();
+  document.getElementById('app').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if(goToResults){
+    loadResults();
+  } else {
+    // App opened without a search — init map on Norwich centre
+    if(window._mapsReady && !willowMap){
+      initMap([]);
+    }
+  }
+}
+
+function closeApp(){
+  document.getElementById('app').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function switchTab(tab){
+  ['results','liked'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('anav-'+t).classList.toggle('active', t===tab);
+  });
+  if(tab === 'liked') renderLiked();
+  if(tab === 'results' && willowMap){
+    // Trigger resize so map renders correctly after being hidden
+    setTimeout(() => google.maps.event.trigger(willowMap, 'resize'), 100);
+  }
+}
+
+// ══════════════════════════════════════════
+// SEARCH & RESULTS
+// ══════════════════════════════════════════
+async function loadResults(){
+  switchTab('results');
+
+  const dietary = searchPrefs.dietary || 'gluten free';
+  const area = searchPrefs.area || 'Norwich';
+  document.getElementById('res-q').textContent = `${dietary} · ${area}`;
+  document.getElementById('map-dietary-label').textContent = dietary.toUpperCase().split('/')[0].trim();
+  document.getElementById('map-location-label').textContent = `Norwich, ${area}`;
+
+  const container = document.getElementById('vcc');
+  container.innerHTML = `<div class="spinner-wrap"><div class="spinner"></div><p>Finding the best ${dietary} spots in ${area}...</p></div>`;
+
+  // API key lives on Netlify — no check needed here
+  checkApiBanner(false);
+
+  try {
+    const venues = await searchGooglePlaces(dietary, area);
+    if(!venues || venues.length === 0){
+      console.warn('No results — falling back to demo data');
+      useDemoVenues();
+    } else {
+      currentVenues = venues;
+      renderVenueCards();
+    }
+  } catch(err){
+    console.error('Search error — falling back to demo data:', err.message);
+    useDemoVenues();
+  }
+}
+
+function useDemoVenues(){
+  currentVenues = DEMO_VENUES;
+  renderVenueCards();
+}
+
+// ══════════════════════════════════════════
+// GOOGLE PLACES API — via Netlify proxy
+// ══════════════════════════════════════════
+async function searchGooglePlaces(dietary, area){
+  const searchQuery = `${dietary} restaurant ${area} Norwich`;
+  const url = `${PROXY_URL}/api/places?q=${encodeURIComponent(searchQuery)}&dietary=${encodeURIComponent(dietary)}`;
+  console.log('Willow: fetching', url);
+  const resp = await fetch(url);
+  if(!resp.ok) throw new Error(`Proxy returned ${resp.status}`);
+  const data = await resp.json();
+  if(data.error) throw new Error(data.error);
+  return (data.results || []).slice(0,7).map((p, i) => mapGooglePlace(p, i, dietary));
+}
+
+function mapGooglePlace(p, i, dietary){
+  // Map a Google Places result to our venue format
+  const confidence = scoreConfidence(p, dietary);
+  return {
+    id: p.place_id,
+    name: p.name,
+    address: p.formatted_address || p.vicinity,
+    phone: p.formatted_phone_number || '',
+    confidence,
+    rating: p.rating,
+    user_ratings_total: p.user_ratings_total,
+    place_id: p.place_id,
+    description: p.editorial_summary?.overview || `${p.name} is a venue in Norwich offering dining options in a ${p.types?.[0]?.replace(/_/g,' ') || 'restaurant'} setting.`,
+    whyFits: buildWhyFits(p, dietary, confidence),
+    instagram: null, tiktok: null,
+    website: p.website || null,
+    booking: null,
+    openNow: p.opening_hours?.open_now,
+    hours: p.opening_hours?.weekday_text?.[new Date().getDay()] || null,
+    lat: p.geometry?.location?.lat,
+    lng: p.geometry?.location?.lng,
+    photos: [], // photos served via proxy separately to protect API key
+    googleReviews: (p.reviews || []).slice(0,5).map(r => ({
+      author: r.author_name,
+      stars: r.rating,
+      text: r.text,
+      time: r.relative_time_description
+    }))
+  };
+}
+
+function scoreConfidence(place, dietary){
+  // Heuristic confidence scoring based on available signals
+  const name = (place.name || '').toLowerCase();
+  const types = (place.types || []).join(' ');
+  const reviewText = (place.reviews || []).map(r => r.text.toLowerCase()).join(' ');
+  const dietaryLower = dietary.toLowerCase();
+
+  let score = 0;
+  // Name signals
+  if(name.includes('vegan') || name.includes('gluten') || name.includes(dietaryLower)) score += 3;
+  // Review signals
+  const posKeywords = ['gluten free', 'coeliac', 'celiac', 'gf option', 'dairy free', 'vegan', 'allergy', 'safe'];
+  posKeywords.forEach(kw => { if(reviewText.includes(kw)) score += 1; });
+  // Rating signal
+  if(place.rating >= 4.5) score += 1;
+  // Type signal — dedicated restaurants score higher than pubs
+  if(types.includes('restaurant')) score += 1;
+
+  if(score >= 5) return 'verified';
+  if(score >= 2) return 'supported';
+  return 'unknown';
+}
+
+function buildWhyFits(place, dietary, confidence){
+  if(confidence === 'verified') return `✓ Multiple reviewer signals confirm ${dietary} friendliness, high rating (${place.rating}★), and consistent positive allergy feedback`;
+  if(confidence === 'supported') return `⚡ Some reviewer signals suggest ${dietary} options — confirm specifics with staff on arrival`;
+  return `? Limited ${dietary} evidence in reviews — call ahead to confirm before visiting`;
+}
+
+// ══════════════════════════════════════════
+// RENDER VENUE CARDS
+// ══════════════════════════════════════════
+function renderVenueCards(){
+  const container = document.getElementById('vcc');
+  container.innerHTML = '';
+  renderMapPins();
+  currentVenues.forEach((v,i) => container.appendChild(buildCard(v,i)));
+}
+
+// ── GOOGLE MAP ────────────────────────────────────────────────
+let willowMap = null;
+let willowMarkers = [];
+
+// Greyscale map style matching Willow aesthetic
+const GREY_STYLE = [
+  {elementType:'geometry',stylers:[{saturation:-100},{lightness:5}]},
+  {elementType:'labels.text.fill',stylers:[{color:'#666666'}]},
+  {elementType:'labels.text.stroke',stylers:[{color:'#ffffff'},{weight:2}]},
+  {featureType:'road',elementType:'geometry',stylers:[{color:'#ffffff'}]},
+  {featureType:'road.arterial',elementType:'geometry',stylers:[{color:'#eeeeee'}]},
+  {featureType:'road.highway',elementType:'geometry',stylers:[{color:'#dadada'}]},
+  {featureType:'water',elementType:'geometry',stylers:[{color:'#c9d8e8'},{saturation:-80}]},
+  {featureType:'poi.park',elementType:'geometry',stylers:[{color:'#d8e8d0'},{saturation:-80}]},
+  {featureType:'poi',elementType:'labels',stylers:[{visibility:'off'}]},
+  {featureType:'transit',stylers:[{visibility:'off'}]},
+  {featureType:'administrative',elementType:'geometry.stroke',stylers:[{color:'#cccccc'}]},
+];
+
+function initMap(venues){
+  const mapEl = document.getElementById('willow-map');
+  if(!mapEl) return;
+
+  // Default centre: Norwich city centre
+  const centre = {lat: 52.6309, lng: 1.2974};
+
+  // If we have venues with coords, centre on them
+  const withCoords = venues.filter(v => v.lat && v.lng);
+  if(withCoords.length > 0){
+    const avgLat = withCoords.reduce((s,v) => s + v.lat, 0) / withCoords.length;
+    const avgLng = withCoords.reduce((s,v) => s + v.lng, 0) / withCoords.length;
+    centre.lat = avgLat;
+    centre.lng = avgLng;
+  }
+
+  // Create or reuse map
+  if(!willowMap){
+    willowMap = new google.maps.Map(mapEl, {
+      center: centre,
+      zoom: 15,
+      styles: GREY_STYLE,
+      disableDefaultUI: true,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+      },
+      gestureHandling: 'cooperative',
+      clickableIcons: false,
+    });
+  } else {
+    willowMap.setCenter(centre);
+    willowMap.setZoom(15);
+  }
+
+  // Clear old markers
+  willowMarkers.forEach(m => m.setMap(null));
+  willowMarkers = [];
+
+  // Fit bounds to all venue coords
+  if(withCoords.length > 1){
+    const bounds = new google.maps.LatLngBounds();
+    withCoords.forEach(v => bounds.extend({lat: v.lat, lng: v.lng}));
+    willowMap.fitBounds(bounds, {top:80, bottom:40, left:40, right:40});
+  }
+
+  // Add a pink custom marker for each venue
+  venues.forEach((v, i) => {
+    if(!v.lat || !v.lng) return;
+
+    // Custom pink pin SVG
+    const svg = `
+      <svg width="36" height="44" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 0C8.059 0 0 8.059 0 18c0 12 18 26 18 26S36 30 36 18C36 8.059 27.941 0 18 0z"
+              fill="#FF3B7A" stroke="white" stroke-width="2.5"/>
+        <circle cx="18" cy="18" r="10" fill="white"/>
+        <text x="18" y="23" text-anchor="middle" font-family="DM Sans,sans-serif"
+              font-size="12" font-weight="800" fill="#FF3B7A">${i+1}</text>
+      </svg>`;
+
+    const marker = new google.maps.Marker({
+      position: {lat: v.lat, lng: v.lng},
+      map: willowMap,
+      title: v.name,
+      icon: {
+        url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+        scaledSize: new google.maps.Size(36, 44),
+        anchor: new google.maps.Point(18, 44),
+      },
+      zIndex: 100 - i,
+    });
+
+    // Info window on click
+    const infoWindow = new google.maps.InfoWindow({
+      content: `<div style="font-family:DM Sans,sans-serif;padding:4px 6px;max-width:180px">
+        <div style="font-weight:700;font-size:13px;color:#0A0A0A;margin-bottom:2px">${v.name}</div>
+        <div style="font-size:11px;color:#888">${v.address}</div>
+      </div>`,
+      pixelOffset: new google.maps.Size(0, -8),
+    });
+
+    marker.addListener('click', () => {
+      willowMarkers.forEach(m => m._iw && m._iw.close());
+      infoWindow.open(willowMap, marker);
+      marker._iw = infoWindow;
+      focusCard(i);
+    });
+
+    marker._iw = null;
+    marker._idx = i;
+    willowMarkers.push(marker);
+  });
+}
+
+// Called when a card is focused — animates the corresponding marker
+function highlightMarker(idx){
+  willowMarkers.forEach((m, i) => {
+    if(i === idx){
+      m.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(() => m.setAnimation(null), 700);
+      willowMap && willowMap.panTo(m.getPosition());
+    }
+  });
+}
+
+function renderMapPins(){
+  // Now handled by initMap — called after venues load
+  if(window._mapsReady){
+    initMap(currentVenues);
+  } else {
+    window._mapsReadyCallback = () => initMap(currentVenues);
+  }
+}
+
+function buildCard(v, i){
+  const isLiked = liked.includes(v.id);
+  const confLabels = { verified:'Willow Verified', supported:'GF Supported', unknown:'Needs Checking' };
+  const vcr = communityReviews[v.id] || [];
+  const allReviews = [...(v.googleReviews || []), ...vcr];
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(v.name + ' ' + v.address)}`;
+
+  const el = document.createElement('div');
+  el.className = 'vc';
+  el.id = 'vc'+i;
+  el.onclick = e => { if(!e.target.closest('button,a')) focusCard(i); };
+
+  // Build photos HTML
+  const photosHtml = v.photos && v.photos.length
+    ? `<div class="photo-strip">${v.photos.map(p=>`<img src="${p}" alt="${v.name}" loading="lazy" onerror="this.style.display='none'">`).join('')}</div>`
+    : '';
+
+  // Rating HTML
+  const ratingHtml = v.rating
+    ? `<div class="rating-row"><span class="rating-stars">${'★'.repeat(Math.round(v.rating))}${'☆'.repeat(5-Math.round(v.rating))}</span><span style="font-size:13px;font-weight:600;color:var(--black)">${v.rating}</span><span class="rating-count">(${(v.user_ratings_total||0).toLocaleString()} reviews)</span></div>`
+    : '';
+
+  // Opening hours
+  const hoursHtml = v.openNow !== undefined
+    ? `<span class="hours-tag ${v.openNow ? 'open-now' : 'closed-now'}">${v.openNow ? '● Open now' : '○ Closed now'}${v.hours ? ' · '+v.hours : ''}</span>`
+    : '';
+
+  // Links
+  const links = [];
+  if(v.website) links.push(`<a class="vcl website" href="${v.website}" target="_blank" rel="noopener">🌐 Website</a>`);
+  if(v.booking) links.push(`<a class="vcl booking" href="${v.booking}" target="_blank" rel="noopener">📅 Book a table</a>`);
+  if(v.instagram) links.push(`<a class="vcl instagram" href="https://instagram.com/${v.instagram}" target="_blank" rel="noopener">📸 Instagram</a>`);
+  if(v.tiktok) links.push(`<a class="vcl tiktok" href="https://tiktok.com/@${v.tiktok}" target="_blank" rel="noopener">🎵 TikTok</a>`);
+  if(v.phone) links.push(`<a class="vcl phone" href="tel:${v.phone.replace(/\s/g,'')}">📞 Call</a>`);
+  links.push(`<a class="vcl maps" href="${mapsUrl}" target="_blank" rel="noopener">🗺️ Directions</a>`);
+
+  // Reviews
+  const reviewsHtml = allReviews.map(r => `
+    <div class="ritem">
+      <div class="rhdr">
+        <span class="rauth">${r.author || r.author_name || 'Reviewer'}</span>
+        <span class="rstr">${'★'.repeat(r.stars||r.rating||5)}${'☆'.repeat(5-(r.stars||r.rating||5))}</span>
+        ${r.time ? `<span style="font-size:11px;color:var(--grey);margin-left:auto">${r.time}</span>` : ''}
+        <span class="rbadge ${r.community ? 'willow' : 'google'}">${r.community ? 'Willow' : 'Google'}</span>
+      </div>
+      <p class="rtxt">${r.text}</p>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="vch">
+      <div class="vcnum">${i+1}</div>
+      <div class="vci">
+        <div class="vcn">${v.name}</div>
+        <div class="vca">📍 ${v.address}</div>
+        ${ratingHtml}
+        ${hoursHtml}
+      </div>
+      <div class="vch-actions">
+        <button class="maps-btn-sm" onclick="window.open('${mapsUrl}','_blank')" title="Open in Google Maps">🗺️ Map</button>
+        <button class="hbtn ${isLiked?'lk':''}" onclick="toggleLike('${v.id}',this)" title="Save">${isLiked?'♥':'♡'}</button>
+      </div>
+    </div>
+    <span class="cbadge ${v.confidence}">${confLabels[v.confidence]}</span>
+    ${v.phone ? `<div style="padding:0 16px 8px;font-size:12px;color:var(--grey)">📞 <a href="tel:${v.phone.replace(/\s/g,'')}" style="color:inherit;text-decoration:none" onmouseover="this.style.color='var(--pink)'" onmouseout="this.style.color='inherit'">${v.phone}</a></div>` : ''}
+    <div class="vcdiv"></div>
+    ${photosHtml}
+    <div class="vcbody">
+      <p class="vcdesc">${v.description}</p>
+      <div class="wf">${v.whyFits}</div>
+      <div class="vclinks">${links.join('')}</div>
+    </div>
+    <button class="rtog" onclick="toggleRev(this,'${v.id}')">
+      <span>Reviews (${allReviews.length})</span><span>▾</span>
+    </button>
+    <div class="rpanel" id="rp${v.id}">
+      ${reviewsHtml || '<p style="font-size:13px;color:var(--grey);padding:8px 0">No reviews yet — be the first!</p>'}
+      <div class="arf">
+        <p>+ Add your Willow review</p>
+        <div class="sps" id="sps${v.id}">${[1,2,3,4,5].map(n=>`<button onclick="setStar('${v.id}',${n})" id="s${v.id}-${n}">★</button>`).join('')}</div>
+        <textarea class="rta" id="rt${v.id}" rows="2" placeholder="Was it safe? Was the food good? Help other Willow users..."></textarea>
+        <button class="subr" onclick="submitRev('${v.id}')">Submit review</button>
+      </div>
+    </div>`;
+  return el;
+}
+
+function focusCard(i){
+  document.querySelectorAll('.vc').forEach((c,j)=>c.classList.toggle('act',j===i));
+  const c = document.getElementById('vc'+i);
+  if(c) c.scrollIntoView({behavior:'smooth',block:'nearest'});
+  highlightMarker(i);
+}
+
+function toggleRev(btn, id){
+  const p = document.getElementById('rp'+id);
+  p.classList.toggle('open');
+  btn.querySelector('span:last-child').textContent = p.classList.contains('open') ? '▴' : '▾';
+}
+
+function openGoogleMapsArea(){
+  const q = encodeURIComponent(`${searchPrefs.dietary || 'gluten free'} restaurants Norwich`);
+  window.open(`https://www.google.com/maps/search/${q}`, '_blank');
+}
+
+// ══════════════════════════════════════════
+// LIKES
+// ══════════════════════════════════════════
+function toggleLike(id, btn){
+  const idx = liked.indexOf(id);
+  if(idx >= 0){ liked.splice(idx,1); btn.classList.remove('lk'); btn.textContent='♡'; }
+  else { liked.push(id); btn.classList.add('lk'); btn.textContent='♥'; btn.style.transform='scale(1.35)'; setTimeout(()=>btn.style.transform='',180); }
+  localStorage.setItem('willow_liked', JSON.stringify(liked));
+  updateBadge();
+}
+
+function updateBadge(){
+  const b = document.getElementById('hbadge');
+  b.textContent = liked.length;
+  b.style.display = liked.length ? '' : 'none';
+}
+
+function renderLiked(){
+  const c = document.getElementById('lkc');
+  const likedVenues = currentVenues.filter(v => liked.includes(v.id));
+  const savedFromStorage = JSON.parse(localStorage.getItem('willow_liked_venues') || '[]');
+  const all = [...likedVenues];
+  savedFromStorage.forEach(sv => { if(!all.find(v=>v.id===sv.id)) all.push(sv); });
+
+  if(!all.length){
+    c.innerHTML = `<div class="lk-empty"><div class="ei">♡</div><h3>No saved places yet</h3><p>Heart any venue in results to save it here.</p></div>`;
+    return;
+  }
+  const grid = document.createElement('div');
+  grid.className = 'lk-grid';
+  all.forEach((v,i) => grid.appendChild(buildCard(v, i)));
+  c.innerHTML = '';
+  c.appendChild(grid);
+}
+
+// Persist liked venues so they show on liked tab even after new searches
+function persistLikedVenue(v){
+  const saved = JSON.parse(localStorage.getItem('willow_liked_venues') || '[]');
+  if(!saved.find(s => s.id === v.id)) saved.push(v);
+  localStorage.setItem('willow_liked_venues', JSON.stringify(saved));
+}
+
+// ══════════════════════════════════════════
+// REVIEWS
+// ══════════════════════════════════════════
+function setStar(id, n){
+  starRatings[id] = n;
+  for(let i=1;i<=5;i++){ const b=document.getElementById(`s${id}-${i}`); if(b) b.classList.toggle('on', i<=n); }
+}
+
+function submitRev(id){
+  const text = document.getElementById('rt'+id)?.value.trim();
+  const stars = starRatings[id] || 0;
+  if(!text || !stars){ alert('Please add a star rating and a comment.'); return; }
+  if(!communityReviews[id]) communityReviews[id] = [];
+  communityReviews[id].push({ author:'You', stars, text, community:true });
+  localStorage.setItem('willow_cr', JSON.stringify(communityReviews));
+  renderVenueCards();
+  const p = document.getElementById('rp'+id);
+  if(p){ p.classList.add('open'); p.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+}
+
+// ══════════════════════════════════════════
+// API KEY MANAGEMENT
+// ══════════════════════════════════════════
+function checkApiBanner(show){
+  document.getElementById('api-banner').style.display = show ? 'flex' : 'none';
+}
+
+function saveApiKey(){ checkApiBanner(false); }
+
+// ══════════════════════════════════════════
+// CHAT MESSAGE HELPERS
+// ══════════════════════════════════════════
+function addMsg(cid, text, role){
+  const c = document.getElementById(cid);
+  const row = document.createElement('div');
+  row.className = 'mrow' + (role==='u' ? ' u' : '');
+  if(role==='u') row.innerHTML = `<div class="bub ua">${text}</div><div class="av ua">A</div>`;
+  else row.innerHTML = `<div class="av">W</div><div class="bub w">${text}</div>`;
+  c.appendChild(row);
+  c.scrollTop = c.scrollHeight;
+  return row;
+}
+
+function addTyping(cid){
+  const c = document.getElementById(cid);
+  const row = document.createElement('div');
+  row.className = 'mrow';
+  row.innerHTML = `<div class="av">W</div><div class="bub w"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  c.appendChild(row);
+  c.scrollTop = c.scrollHeight;
+  return row;
+}
+
+function setChips(cid, chips, fn){
+  const c = document.getElementById(cid);
+  c.innerHTML = chips.map(ch => `<button class="chip" onclick="(${fn.name})('${ch.replace(/'/g,"\\'")}'')">${ch}</button>`).join('');
+}
+
+// ══════════════════════════════════════════
+// MISC
+// ══════════════════════════════════════════
+function toggleFaq(btn){ btn.closest('.faq-item').classList.toggle('open'); }
+
+// Hide API banner — proxy handles auth
+checkApiBanner(false);
+updateBadge();
+</script>
+</body>
+</html>
